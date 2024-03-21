@@ -1,29 +1,30 @@
 #include <kipr/wombat.h>
-void lturn(int angle); //the angles allow 45 or 90, positive int
-void rturn(int angle);
-void back();
-void fore();
-void plowup();
-void plowdown();
-int t();
-// planned void for flip flopping here 
-
+// void loops
+void lturn(); 
+void rturn(); 
+void back(); 
+void fore(); 
+void moveplowup(); 
+void moveplowdown();
+//variables
+int dist();
+int angle();
 //misc
 int nm= 150; //nm stands for normal speed 
-//1st servo
-int flickservo = 0;
-int center= 1028;
-int flip= 1900;  //flip flop to knock out the poms
-int flop= 150;
-//2nd servo 
+// wrist
+int wristservo = 0;
+int wristcenter= 1028;
+int wristleft= 1900;
+int wristright= 150;
+//arm
 int armservo = 1;
 int armtop = 1;
-int pomlevel = 1382;
-int pombot = 1471; 
-//insert pombottom here 
+int armpomtop = 1382;
+int armdown = 1471; 
+//plow
 int plowservo = 2;
-int plowtop = 2047;
-int plowbot = 70;
+int plowup = 2047;
+int plowdown = 70;
 
 int main()
 {
@@ -32,8 +33,8 @@ int main()
     set_create_total_angle(0);
     enable_servos();
     shut_down_in(118);
-    //0-15 Drives forward to moon rock by lava tubes
-    plowdown();
+    //0-15 To Rock Heap
+    moveplowdown();
     back(650); //exits bay
     lturn(15);
     back(200);
@@ -47,8 +48,8 @@ int main()
     rturn(15);
     back(50); //in rock heap
     msleep(2000);
-    plowup();
-   msleep(1000);
+    moveplowup();
+    msleep(1000);
     //15-30 Drive to rock heap
     //30-45 Flip solar panel 
     //~=+5 sec
@@ -66,7 +67,7 @@ int main()
 void lturn(int angle)
 {
  set_create_total_angle(0);
- while (abs(get_create_total_angle())<angle)
+ while (abs(get_create_total_angle()) < angle)
  {
    create_drive_direct(-nm, nm);
     msleep(10);
@@ -78,7 +79,7 @@ void lturn(int angle)
 void rturn(int angle)
 {
    set_create_total_angle(0);
- while (abs(get_create_total_angle())<angle)
+ while (abs(get_create_total_angle()) < angle)
  {
    create_drive_direct(nm, -nm);
     msleep(10);
@@ -87,9 +88,9 @@ void rturn(int angle)
     set_create_total_angle(0);
 } 
 
-void fore(int t)
+void fore(int dist)
 {
-  while (abs(get_create_distance()) < t) {
+  while (abs(get_create_distance()) < dist) {
            create_drive_direct(nm, nm);
         msleep(10);
     }
@@ -97,22 +98,22 @@ void fore(int t)
     set_create_distance(0);
 }
 
-void back(int t)
+void back(int dist)
 {
-    while (abs(get_create_distance()) < t) {
+    while (abs(get_create_distance()) < dist) {
            create_drive_direct(-nm, -nm);
         msleep(10);
     }
     create_stop();
     set_create_distance(0);
 }
-void plowup()
+void moveplowup()
 {
-    set_servo_position(plowservo, plowtop); 
+    set_servo_position(plowservo, plowup); 
     msleep(10);
 }
-void plowdown()
+void moveplowdown()
 {
-    set_servo_position(plowservo, plowbot);
+    set_servo_position(plowservo, plowdown);
     msleep(10);
 }
