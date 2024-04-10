@@ -1,18 +1,24 @@
 #include <kipr/wombat.h>
 // void loops
 void lturn(); 
-void rturn(); 
+void rturn();
+
+void fore(); 
 void back();
+
 void meetline();
 void meetlineback();
-void linetrackback();
+
 void linetrackfore();
-void fore(); 
+void linetrackback();
+
 void moveplowup(); 
 void moveplowdown();
+
 void movearmup();
 void movearmpomtop();
 void movearmdown();
+
 void movewristleft();
 void movewristcenter();
 void movewristright();
@@ -20,10 +26,7 @@ void movewristright();
 int dist();
 int ltdist();
 int angle();
-//misc
-int nm= 150; //nm stands for normal speed 
-int mlright = 0;
-int mlleft = 0;
+int nm= 250; //nm stands for normal speed 
 // wrist
 int wristservo = 0;
 int wristcenter= 1028;
@@ -99,7 +102,8 @@ int main()
     msleep(500);
     movewristright();
     msleep(500);
-
+    
+//collect remaining rocks
     movearmup();
     lturn(200);
     moveplowdown();
@@ -112,6 +116,7 @@ int main()
     create_disconnect();
     camera_close();
     disable_servos();
+    msleep(50);
     return 0;
 }
 
@@ -158,31 +163,37 @@ void back(int dist)
     create_stop();
     set_create_distance(0);
 }
+
 void moveplowup()
 {
     set_servo_position(plowservo, plowup); 
     msleep(10);
 }
+
 void moveplowdown()
 {
     set_servo_position(plowservo, plowdown);
     msleep(10);
 }
+
 void movearmup()
 {
     set_servo_position(armservo, armtop);
     msleep(10);
 }
+
 void movearmpomtop()
 {
     set_servo_position(armservo, armpomtop);
     msleep(10);
 }
+
 void movearmdown()
 {
     set_servo_position(armservo, armdown);
     msleep(10);
 }
+
 void movewristleft()
 {
     set_servo_position(wristservo, wristleft);
@@ -193,11 +204,13 @@ void movewristcenter()
     set_servo_position(wristservo, wristcenter);
     msleep(10);
 }
+
 void movewristright()
 {
     set_servo_position(wristservo, wristright);
     msleep(10);
 }
+
 void linetrackfore(int ltdist)
 {
       while (abs(get_create_distance()) < ltdist) {
@@ -216,6 +229,7 @@ void linetrackfore(int ltdist)
     create_stop();
     set_create_distance(0);
 }
+
 void linetrackback(int ltdist)
 {
       while (abs(get_create_distance()) < ltdist) {
@@ -234,6 +248,7 @@ void linetrackback(int ltdist)
     create_stop();
     set_create_distance(0);
 }
+
 void meetline() 
 {
     while((get_create_lfcliff_amt() > 2000) || (get_create_rfcliff_amt() > 2000))
@@ -258,7 +273,8 @@ void meetline()
     set_create_distance(0);
     set_create_total_angle(0);
 }        
-        void meetlineback() 
+
+void meetlineback() 
 {
     while((get_create_lfcliff_amt() > 2000) || (get_create_rfcliff_amt() > 2000))
     {
