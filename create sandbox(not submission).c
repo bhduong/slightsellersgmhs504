@@ -57,51 +57,51 @@ int main()
     movewristcenter();
 
     meetlineback();
-    msleep(500);
-    back(200);
+    msleep(100);
+    back(100);
     meetlineback();
-    msleep(500);
+    msleep(100);
     back(340);
-    lturn(50);
+    lturn(80);
     meetlineback();
-    msleep(1000);
+    msleep(100);
     fore(20);
     msleep(100);
 
     rturn(33);
     back(470);
-    msleep(500);
+    msleep(100);
     moveplowup();
     msleep(500);
     fore(10);
-    msleep(500);
+    msleep(100);
     rturn(45);
-    msleep(500);
+    msleep(100);
     back(150);
 
     //sort fuel
 
     linetrackfore(5);
     movewristleft();
-    msleep(500);
+    msleep(250);
     movearmdown();
-    msleep(500);
+    msleep(250);
     movewristright();
-    msleep(500);
+    msleep(250);
     movewristleft();
-    msleep(500);
+    msleep(250);
 
     linetrackfore(150);
-    msleep(500);
+    msleep(250);
     movewristright();
-    msleep(300);
+    msleep(250);
     movewristleft();
-    msleep(500);
+    msleep(250);
 
     linetrackfore(150);
-    msleep(500);
+    msleep(250);
     movewristright();
-    msleep(500);
+    msleep(250);
     
 //collect remaining rocks
     movearmup();
