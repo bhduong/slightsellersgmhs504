@@ -2,6 +2,10 @@
 // void loops
 void lturn(); 
 void rturn();
+void arcleft();
+void arcright();
+void backarcleft();
+void backarcright();
 
 void fore(); 
 void back();
@@ -22,11 +26,13 @@ void movearmdown();
 void movewristleft();
 void movewristcenter();
 void movewristright();
+
+void thereset();
 //variables
 int dist();
 int ltdist();
 int angle();
-int nm= 250; //nm stands for normal speed 
+int nm= 150; //nm stands for normal speed 
 // wrist
 int wristservo = 0;
 int wristcenter= 1028;
@@ -62,30 +68,31 @@ int main()
     meetlineback();
     msleep(100);
     back(340);
-    lturn(80);
+    lturn(90);
     meetlineback();
-    msleep(100);
+    fore(50);
+    meetlineback();
+    msleep(500);
     fore(20);
     msleep(100);
 
-    rturn(33);
+    rturn(35);
     back(470);
     msleep(100);
     moveplowup();
     msleep(500);
-    fore(10);
+    back(20);
     msleep(100);
     rturn(45);
     msleep(100);
-    back(150);
+    back(200);
 
     //sort fuel
-
-    linetrackfore(5);
     movewristleft();
+    linetrackfore(5);
     msleep(250);
     movearmdown();
-    msleep(250);
+    msleep(500);
     movewristright();
     msleep(250);
     movewristleft();
@@ -103,16 +110,29 @@ int main()
     movewristright();
     msleep(250);
     
-//collect remaining rocks
+    //collect remaining rocks
+    
     movearmup();
-    lturn(200);
+    linetrackfore(250);
+    lturn(210);
     moveplowdown();
+    msleep(400);
+    backarcleft(450);
+    lturn(35);
+    backarcleft(300);
+    msleep(500);
+    back(100);
+    lturn(75);
+    rturn(40);
+    back(370);
+    
     //30-45 Flip solar panel 
     //~=+5 sec
     //65-80 knock around fertilizer food 
     //80-95 move other collected rocks to heap
     //95-110 return to start
     //game ends ~= 8 seconds later (cushion)
+    thereset();
     create_disconnect();
     camera_close();
     disable_servos();
@@ -130,6 +150,7 @@ void lturn(int angle)
  }
      create_stop();
     set_create_total_angle(0);
+    set_create_distance(0);
 }
 
 void rturn(int angle)
@@ -142,6 +163,7 @@ void rturn(int angle)
  }
     create_stop();
     set_create_total_angle(0);
+    set_create_distance(0);
 } 
 
 void fore(int dist)
@@ -151,6 +173,7 @@ void fore(int dist)
         msleep(10);
     }
     create_stop();
+    set_create_total_angle(0);
     set_create_distance(0);
 }
 
@@ -161,6 +184,7 @@ void back(int dist)
         msleep(10);
     }
     create_stop();
+    set_create_total_angle(0);
     set_create_distance(0);
 }
 
@@ -228,25 +252,27 @@ void linetrackfore(int ltdist)
     }
     create_stop();
     set_create_distance(0);
+    set_create_total_angle(0);
 }
 
 void linetrackback(int ltdist)
 {
       while (abs(get_create_distance()) < ltdist) {
-           while(get_create_lfcliff_amt() < 2000)
+           while(get_create_rfcliff_amt() < 2000)
            {
-               create_drive_direct(-100,-200);
+               create_drive_direct(-100,-25);
                msleep(10);
            }
-       while(get_create_lfcliff_amt() > 2000)
+       while(get_create_rfcliff_amt() > 2000)
            {
-               create_drive_direct(-200,-100);
+               create_drive_direct(-25,-100);
                msleep(10);
            }
         msleep(10);
     }
     create_stop();
-    set_create_distance(0);
+     set_create_distance(0);
+    set_create_total_angle(0);
 }
 
 void meetline() 
@@ -294,4 +320,38 @@ void meetlineback()
         create_stop();     
             set_create_distance(0);
             set_create_total_angle(0);
-}        
+}       
+
+void thereset() 
+{
+    movewristcenter();
+    movearmup();
+    moveplowup();
+    msleep(250);
+}
+
+void arcleft(int dist)
+{
+   set_create_total_angle(0);
+ while (abs(get_create_distance()) < dist)
+ {
+   create_drive_direct(55, 150);
+    msleep(10);
+ }
+    create_stop();
+    set_create_total_angle(0);
+    set_create_distance(0);
+} 
+
+void backarcleft(int dist)
+{
+   set_create_total_angle(0);
+ while (abs(get_create_distance()) < dist)
+ {
+   create_drive_direct(-150, -55);
+    msleep(10);
+ }
+    create_stop();
+    set_create_total_angle(0);
+    set_create_distance(0);
+} 
