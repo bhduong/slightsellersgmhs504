@@ -56,7 +56,7 @@ int main()
     enable_servos();
     shut_down_in(118);
 
-    //0-15 To Rock Heap
+    //0-20 To Rock Heap
 
     moveplowdown();
     movearmup();
@@ -87,7 +87,8 @@ int main()
     msleep(100);
     back(200);
 
-    //sort fuel
+    // 20-40 sort fuel
+    
     movewristleft();
     linetrackfore(5);
     msleep(250);
@@ -113,18 +114,18 @@ int main()
     //collect remaining rocks
     
     movearmup();
-    linetrackfore(250);
+    linetrackfore(200);
     lturn(210);
     moveplowdown();
     msleep(400);
     backarcleft(450);
     lturn(35);
     backarcleft(300);
-    msleep(500);
-    back(100);
+    msleep(250);
+    back(500);
     lturn(75);
-    rturn(40);
-    back(370);
+    fore(100);
+    meetlineback();
     
     //30-45 Flip solar panel 
     //~=+5 sec
@@ -343,12 +344,38 @@ void arcleft(int dist)
     set_create_distance(0);
 } 
 
+void arcright(int dist)
+{
+   set_create_total_angle(0);
+ while (abs(get_create_distance()) < dist)
+ {
+   create_drive_direct(150, 55);
+    msleep(10);
+ }
+    create_stop();
+    set_create_total_angle(0);
+    set_create_distance(0);
+} 
+
 void backarcleft(int dist)
 {
    set_create_total_angle(0);
  while (abs(get_create_distance()) < dist)
  {
    create_drive_direct(-150, -55);
+    msleep(10);
+ }
+    create_stop();
+    set_create_total_angle(0);
+    set_create_distance(0);
+} 
+
+void backarcright(int dist)
+{
+   set_create_total_angle(0);
+ while (abs(get_create_distance()) < dist)
+ {
+   create_drive_direct(-55, -150);
     msleep(10);
  }
     create_stop();
