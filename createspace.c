@@ -54,6 +54,7 @@ int main()
     set_create_distance(0);
     set_create_total_angle(0);
     enable_servos();
+    wait_for_light(0);
     shut_down_in(118);
 
     //0-20 To Rock Heap
@@ -71,6 +72,8 @@ int main()
     lturn(90);
     meetlineback();
     fore(50);
+    meetlineback();
+    fore(20);
     meetlineback();
     msleep(500);
     fore(20);
@@ -114,19 +117,48 @@ int main()
     //collect remaining rocks
     
     movearmup();
-    linetrackfore(200);
+    linetrackfore(220);
     lturn(210);
     moveplowdown();
     msleep(400);
     backarcleft(450);
     lturn(35);
-    backarcleft(300);
+    backarcleft(325);
     msleep(250);
-    back(500);
+    back(330);
     lturn(75);
     fore(100);
     meetline();
+    back(20);
+    meetline();
+    back(20);
+    meetline();
+    back(180);
+    rturn(30);
+    back(190);
+    moveplowup();
     
+    //pom
+    
+    fore(220);
+    rturn(57);
+    meetline();
+    back(20);
+    meetline();
+    back(20);
+    meetline();
+    back(20);
+    
+    movearmpomtop();
+    movewristleft();
+    msleep(250);
+    fore(50);
+    movewristright();
+    msleep(500);
+    movearmdown();
+    msleep(250);
+    movewristleft();
+    msleep(500);
     //30-45 Flip solar panel 
     //~=+5 sec
     //65-80 knock around fertilizer food 
